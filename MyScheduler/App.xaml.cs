@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MyScheduler.View;
+using MyScheduler.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,14 @@ namespace MyScheduler
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            var mw = new MainWindowView
+            {
+                DataContext = new MainViewModel()
+            };
+
+            mw.Show();
+        }
     }
 }

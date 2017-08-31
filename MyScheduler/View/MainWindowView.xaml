@@ -1,0 +1,58 @@
+﻿<Window x:Class="MyScheduler.View.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyScheduler"
+        mc:Ignorable="d"
+        Title="Планировщик задач" Height="350" Width="650">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1.2*" />
+        </Grid.ColumnDefinitions>
+
+        <ListBox Grid.Column="0" ItemsSource="{Binding Tasks}"
+                 SelectedItem="{Binding SelectedTask}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock FontSize="18" Text="{Binding Path=Title}" />
+                        <TextBlock Text="{Binding Path=Body}" />
+                        <TextBlock Text="{Binding Path=Priority}" />
+                        <TextBlock Text="{Binding Path=Date}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Column="1" DataContext="{Binding SelectedTask}">
+            <TextBlock Text="Выбранная задача"  />
+            <TextBlock Text="Название" />
+            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Описание" />
+            <TextBox TextWrapping="Wrap" Text="{Binding Body, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Приоритет" />
+            <TextBox Text="{Binding Priority, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Дата" />
+            <TextBox Text="{Binding Date, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <StackPanel Margin="10,0,0,10" VerticalAlignment="Bottom"  Grid.Column="1" Orientation="Horizontal">
+            <RadioButton Grid.Column="1" GroupName="Change" Content="Искать" IsChecked="True" />
+            <RadioButton Grid.Column="1" GroupName="Change" Content="Добавить" />
+            <RadioButton Grid.Column="1" GroupName="Change" Content="Редактировать" />
+        </StackPanel>
+        
+        <Button Grid.Column="1" Content="Поиск" HorizontalAlignment="Left" Margin="250,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ClickCommand}" RenderTransformOrigin="1.602,6.159"/>
+    </Grid>
+</Window>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyScheduler"
         mc:Ignorable="d"
-        Title="Планировщик задач" Height="350" Width="650">
+        Title="Планировщик задач" Height="350" Width="735">
 
     <Window.Resources>
         <Style TargetType="TextBlock">
@@ -48,11 +48,12 @@
         </StackPanel>
 
         <StackPanel Margin="10,0,0,10" VerticalAlignment="Bottom"  Grid.Column="1" Orientation="Horizontal">
-            <RadioButton Grid.Column="1" GroupName="Change" Content="Искать" IsChecked="True" />
-            <RadioButton Grid.Column="1" GroupName="Change" Content="Добавить" />
-            <RadioButton Grid.Column="1" GroupName="Change" Content="Редактировать" />
+            <RadioButton Grid.Column="1" GroupName="Change" Content="Искать" IsChecked="False" Command="{Binding ClickSearchCommand}"  />
+            <RadioButton Grid.Column="1" GroupName="Change" Content="Добавить" Command="{Binding ClickAddCommand}"  />
+            <RadioButton Grid.Column="1" GroupName="Change" Content="Редактировать" Command="{Binding ClickEditCommand}"  />
+            <RadioButton Grid.Column="1" GroupName="Change" Content="Удалить" Command="{Binding ClickDeleteCommand}"  />
         </StackPanel>
-        
-        <Button Grid.Column="1" Content="Поиск" HorizontalAlignment="Left" Margin="250,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ClickCommand}" RenderTransformOrigin="1.602,6.159"/>
+
+        <Button Grid.Column="1"  x:Name="button1" Content="Кнопка" HorizontalAlignment="Left" Margin="308,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ClickButtonCommand}" RenderTransformOrigin="1.602,6.159"/>
     </Grid>
 </Window>

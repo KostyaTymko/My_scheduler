@@ -14,8 +14,19 @@ namespace MyScheduler.ViewModel
 {
     class MainViewModel
     {
-        private int flag;
+
+        private Visibility _showButton;
+        public Visibility ShowButton
+        {
+            get { return _showButton; }
+        }
+        //Visibility="{Binding ButtonVisibility.Visibility, UpdateSourceTrigger=PropertyChanged}" 
+        //Visibility="{Binding Visibility}"
+
+        //private int flag;
         private MyTask selectedTask;
+        private ButtonContext buttonContext;
+        private ButtonVisibility buttonVisibility;
         public ObservableCollection<MyTask> Tasks { get; set; }
 
         public MyTask SelectedTask
@@ -27,9 +38,27 @@ namespace MyScheduler.ViewModel
                 OnPropertyChanged("SelectedTask");
             }
         }
+
+        public ButtonContext ButtonContext
+        {
+            get { return buttonContext; }
+            set { buttonContext = value; }
+        }
+
+        public ButtonVisibility ButtonVisbility
+        {
+            get { return buttonVisibility; }
+            set { buttonVisibility = value; }
+        }
         public MainViewModel()
         {
-            flag = 0;
+            //_showButton = Visibility.Collapsed;
+            //ButtonVisbility.Visibility = Visibility.Hidden;
+
+            buttonContext = new ButtonContext();
+            buttonVisibility = new ButtonVisibility();
+            buttonVisibility.Visibility = Visibility.Hidden;
+            //flag = 0;
             ClickButtonCommand = new Command(arg => ClickButtonMethod());
             ClickSearchCommand = new Command(arg => ClickSearchMethod());
             ClickAddCommand = new Command(arg => ClickAddMethod());
@@ -66,27 +95,32 @@ namespace MyScheduler.ViewModel
         /// </summary>
         private void ClickButtonMethod()
         {
-
             MessageBox.Show("button");
         }
         private void ClickSearchMethod()
         {
-            MessageBox.Show("search");
-            //button.Visibility = Visibility.Visible;
-            //NAME = "Changed Name";
-            //button1.Content = ;
+            
+            this.ButtonVisbility.Visibility = Visibility.Hidden;
+            //_showButton = Visibility.Hidden;
+            this.ButtonContext.Message = "Search";
+            //MessageBox.Show("search");
         }
         private void ClickAddMethod()
         {
-            MessageBox.Show("add");
+            //_showButton = Visibility.Visible;
+            this.ButtonVisbility.Visibility = Visibility.Visible;
+            this.ButtonContext.Message = "Add";
+            //MessageBox.Show("add");
         }
         private void ClickEditMethod()
         {
-            MessageBox.Show("edit");
+            this.ButtonContext.Message = "Edit";
+            //MessageBox.Show("edit");
         }
         private void ClickDeleteMethod()
         {
-            MessageBox.Show("add");
+            this.ButtonContext.Message = "Delete";
+            //MessageBox.Show("delete");
         }
         #endregion
 

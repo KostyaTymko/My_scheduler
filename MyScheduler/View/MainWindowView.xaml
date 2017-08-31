@@ -54,6 +54,6 @@
             <RadioButton Grid.Column="1" GroupName="Change" Content="Удалить" Command="{Binding ClickDeleteCommand}"  />
         </StackPanel>
 
-        <Button Grid.Column="1"  x:Name="button1" Content="Кнопка" HorizontalAlignment="Left" Margin="308,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ClickButtonCommand}" RenderTransformOrigin="1.602,6.159"/>
+        <Button Grid.Column="1" Visibility="{Binding ButtonVisibility.Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{Binding ButtonContext.Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="308,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ClickButtonCommand}" RenderTransformOrigin="1.602,6.159"/>
     </Grid>
 </Window>

@@ -11,9 +11,9 @@ namespace MyScheduler.Model
 {
     class ButtonVisibility : INotifyPropertyChanged
     {
-        private Visibility visibility;
+        private bool visibility;
 
-        public Visibility Visibility
+        public bool Visibility
         {
             get { return visibility; }
             set

@@ -14,16 +14,7 @@ namespace MyScheduler.ViewModel
 {
     class MainViewModel
     {
-
-        private Visibility _showButton;
-        public Visibility ShowButton
-        {
-            get { return _showButton; }
-        }
-        //Visibility="{Binding ButtonVisibility.Visibility, UpdateSourceTrigger=PropertyChanged}" 
-        //Visibility="{Binding Visibility}"
-
-        //private int flag;
+        private int flag;
         private MyTask selectedTask;
         private ButtonContext buttonContext;
         private ButtonVisibility buttonVisibility;
@@ -48,17 +39,19 @@ namespace MyScheduler.ViewModel
         public ButtonVisibility ButtonVisbility
         {
             get { return buttonVisibility; }
-            set { buttonVisibility = value; }
+            set
+            {
+                buttonVisibility = value;
+                OnPropertyChanged("Visibility");
+            }
         }
         public MainViewModel()
         {
-            //_showButton = Visibility.Collapsed;
-            //ButtonVisbility.Visibility = Visibility.Hidden;
-
             buttonContext = new ButtonContext();
-            buttonVisibility = new ButtonVisibility();
-            buttonVisibility.Visibility = Visibility.Hidden;
-            //flag = 0;
+            //buttonVisibility = new ButtonVisibility();
+            //buttonVisibility.Visibility = false;
+
+            ClickViewCommand = new Command(arg => ClickViewMethod());
             ClickButtonCommand = new Command(arg => ClickButtonMethod());
             ClickSearchCommand = new Command(arg => ClickSearchMethod());
             ClickAddCommand = new Command(arg => ClickAddMethod());
@@ -66,8 +59,8 @@ namespace MyScheduler.ViewModel
             ClickDeleteCommand = new Command(arg => ClickDeleteMethod());
             Shedules_Singleton s = Shedules_Singleton.getInstance("DbTasks");
             Tasks = s.Tasks;
+            ClickViewMethod();
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
@@ -76,13 +69,12 @@ namespace MyScheduler.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-
-
         #region Commands
         /// <summary>
         /// Get or set ClickCommand.
         /// </summary>
         public ICommand ClickButtonCommand { get; set; }
+        public ICommand ClickViewCommand { get; set; }
         public ICommand ClickSearchCommand { get; set; }
         public ICommand ClickAddCommand { get; set; }
         public ICommand ClickEditCommand { get; set; }
@@ -93,41 +85,41 @@ namespace MyScheduler.ViewModel
         /// <summary>
         /// Click method.
         /// </summary>
-        private void ClickButtonMethod()
+        private void ClickViewMethod()
         {
-            MessageBox.Show("button");
+            this.ButtonContext.Message = "View";
+            //MessageBox.Show("search");
         }
         private void ClickSearchMethod()
         {
-            
-            this.ButtonVisbility.Visibility = Visibility.Hidden;
-            //_showButton = Visibility.Hidden;
             this.ButtonContext.Message = "Search";
             //MessageBox.Show("search");
-        }
-        private void ClickAddMethod()
-        {
-            //_showButton = Visibility.Visible;
-            this.ButtonVisbility.Visibility = Visibility.Visible;
-            this.ButtonContext.Message = "Add";
-            //MessageBox.Show("add");
         }
         private void ClickEditMethod()
         {
             this.ButtonContext.Message = "Edit";
+            if (selectedTask != null)
+            {
+                MessageBox.Show(selectedTask.Title.ToString());
+            } 
             //MessageBox.Show("edit");
+        }
+        private void ClickAddMethod()
+        {
+            //this.ButtonVisbility.Visibility = false;
+            this.ButtonContext.Message = "Add";
+            //MessageBox.Show("add");
+            
         }
         private void ClickDeleteMethod()
         {
             this.ButtonContext.Message = "Delete";
             //MessageBox.Show("delete");
         }
+        private void ClickButtonMethod()
+        {
+            MessageBox.Show("button");
+        }
         #endregion
-
-
-
-
-
-
     }
 }

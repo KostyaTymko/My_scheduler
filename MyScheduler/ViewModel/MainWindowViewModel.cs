@@ -18,7 +18,9 @@ namespace MyScheduler.ViewModel
         private MyTask selectedTask;
         private ButtonContext buttonContext;
         private ButtonVisibility buttonVisibility;
+        private ObservableCollection<MyTask> Temp;
         public ObservableCollection<MyTask> Tasks { get; set; }
+        
 
         public MyTask SelectedTask
         {
@@ -87,38 +89,54 @@ namespace MyScheduler.ViewModel
         /// </summary>
         private void ClickViewMethod()
         {
+            flag = 1;
             this.ButtonContext.Message = "View";
-            //MessageBox.Show("search");
+            //MessageBox.Show(flag.ToString());
         }
         private void ClickSearchMethod()
         {
+            flag = 2;
             this.ButtonContext.Message = "Search";
-            //MessageBox.Show("search");
+            //MessageBox.Show(flag.ToString());
         }
         private void ClickEditMethod()
         {
+            flag = 3;
             this.ButtonContext.Message = "Edit";
-            if (selectedTask != null)
-            {
-                MessageBox.Show(selectedTask.Title.ToString());
-            } 
-            //MessageBox.Show("edit");
+            //MessageBox.Show(flag.ToString());
         }
         private void ClickAddMethod()
         {
+            flag = 4;
             //this.ButtonVisbility.Visibility = false;
             this.ButtonContext.Message = "Add";
-            //MessageBox.Show("add");
-            
+            //MessageBox.Show(flag.ToString());
+
         }
         private void ClickDeleteMethod()
         {
+            flag = 5;
             this.ButtonContext.Message = "Delete";
-            //MessageBox.Show("delete");
+            //MessageBox.Show(flag.ToString());
         }
-        private void ClickButtonMethod()
+        private void ClickButtonMethod()//fasade
         {
-            MessageBox.Show("button");
+            //MessageBox.Show("button");
+            if(flag==3 && selectedTask != null)
+            {                
+                XmlSerialDeSerial x = new XmlSerialDeSerial();
+                x.SerializeObject(Tasks, "DbTasks");
+                MessageBox.Show("Saved");
+            }
+
+            if (flag == 5 && selectedTask != null)
+            {
+                //itemSet.Remove(item);
+                Tasks.Remove(selectedTask);
+                XmlSerialDeSerial x = new XmlSerialDeSerial();
+                x.SerializeObject(Tasks, "DbTasks");
+                MessageBox.Show("Deleted");
+            }
         }
         #endregion
     }

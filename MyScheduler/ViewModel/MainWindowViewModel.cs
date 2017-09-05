@@ -110,6 +110,12 @@ namespace MyScheduler.ViewModel
             flag = 4;
             //this.ButtonVisbility.Visibility = false;
             this.ButtonContext.Message = "Add";
+            
+            //if (selectedTask != null)
+            //{
+            //    selectedTask.Title = "";
+            //}
+            
             //MessageBox.Show(flag.ToString());
 
         }
@@ -129,6 +135,11 @@ namespace MyScheduler.ViewModel
                 MessageBox.Show("Saved");
             }
 
+            if (flag == 4 )
+            {
+                Tasks.Add(new MyTask());
+            }
+
             if (flag == 5 && selectedTask != null)
             {
                 //itemSet.Remove(item);
@@ -137,6 +148,7 @@ namespace MyScheduler.ViewModel
                 x.SerializeObject(Tasks, "DbTasks");
                 MessageBox.Show("Deleted");
             }
+
         }
         #endregion
     }

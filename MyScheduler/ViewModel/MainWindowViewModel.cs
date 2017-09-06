@@ -9,16 +9,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
+// <RadioButton GroupName="Change" Content="View" IsChecked="True" Command="{Binding ClickViewCommand}"  />
 namespace MyScheduler.ViewModel
 {
     class MainViewModel
     {
+        Shedules_Singleton s;
         private int flag;
         private MyTask selectedTask;
         private ButtonContext buttonContext;
         private ButtonVisibility buttonVisibility;
-        private ObservableCollection<MyTask> temp;
+        private List<MyTask> temp;
 
         public ObservableCollection<MyTask> tasks;
         public ObservableCollection<MyTask> Tasks
@@ -30,8 +31,6 @@ namespace MyScheduler.ViewModel
                 OnPropertyChanged("Tasks");
             }
         }
-        
-
         public MyTask SelectedTask
         {
             get { return selectedTask; }
@@ -69,9 +68,9 @@ namespace MyScheduler.ViewModel
             ClickAddCommand = new Command(arg => ClickAddMethod());
             ClickEditCommand = new Command(arg => ClickEditMethod());
             ClickDeleteCommand = new Command(arg => ClickDeleteMethod());
-            Shedules_Singleton s = Shedules_Singleton.getInstance("DbTasks");
+            s = Shedules_Singleton.getInstance("DbTasks");
             Tasks = s.Tasks;
-            ClickViewMethod();
+            ClickEditMethod();            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -98,11 +97,17 @@ namespace MyScheduler.ViewModel
         /// Click method.
         /// </summary>
         private void ClickViewMethod()
-        {
- 
+        { 
             flag = 1;
             this.ButtonContext.Message = "View";
-            //MessageBox.Show(flag.ToString());
+            if (temp != null)
+            {
+                tasks.Clear();
+                for (int i = 0; i < temp.Count; i++)
+                {
+                    tasks.Add(temp[i]);
+                }
+            }
         }
         private void ClickSearchMethod()
         {
@@ -111,57 +116,72 @@ namespace MyScheduler.ViewModel
         }
         private void ClickEditMethod()
         {
+            if (temp != null)
+            {
+                tasks.Clear();
+                for (int i = 0; i < temp.Count; i++)
+                {
+                    tasks.Add(temp[i]);
+                }
+            }
             flag = 3;
-            this.ButtonContext.Message = "Edit";
-            //MessageBox.Show(flag.ToString());
+            this.ButtonContext.Message = "Save";
         }
         private void ClickAddMethod()
         {
+            if (temp != null)
+            {
+                tasks.Clear();
+                for (int i = 0; i < temp.Count; i++)
+                {
+                    tasks.Add(temp[i]);
+                }
+            }
             flag = 4;
-            //this.ButtonVisbility.Visibility = false;
             this.ButtonContext.Message = "Add";
-            
-            //if (selectedTask != null)
-            //{
-            //    selectedTask.Title = "";
-            //}
-            
-            //MessageBox.Show(flag.ToString());
-
         }
         private void ClickDeleteMethod()
         {
+            if (temp != null)
+            {
+                tasks.Clear();
+                for (int i = 0; i < temp.Count; i++)
+                {
+                    tasks.Add(temp[i]);
+                }
+            }
             flag = 5;
             this.ButtonContext.Message = "Delete";
             //MessageBox.Show(flag.ToString());
         }
-
-
         private void ClickButtonMethod()//fasade
         {
+           
             if (flag == 2)
             {
-                MyTask t = new MyTask();
-                t.Title = "1";
-                tasks.Add(t);
+                temp = new List<MyTask>();
                 List<MyTask> l = new List<MyTask>();
-                foreach(MyTask m in tasks)
+                if (selectedTask != null)
                 {
-                    l.Add(m);
+                    foreach (MyTask m in tasks)
+                    {
+                        temp.Add(m);
+                        if (/*m.Body.Contains(selectedTask.Body) ||*/ m.Title.Contains(selectedTask.Title)==true /*|| m.Priority == selectedTask.Priority || m.Date == selectedTask.Date*/)
+                        {
+                            l.Add(m);
+                        }
+                    }
+                    tasks.Clear();
+                    for (int i = 0; i < l.Count; i++)
+                    {
+                        tasks.Add(l[i]);
+                    }
                 }
-
-                l.Reverse();
-
-                tasks.Clear();
-               for(int i = 0; i < l.Count; i++)
-                {
-                    tasks.Add(l[i]);
-                }
-        
+                //MessageBox.Show("!!!!");
             }
-            //MessageBox.Show("button");
-            if(flag==3 && selectedTask != null)
-            {                
+
+            if (flag==3 && selectedTask != null)
+            {
                 XmlSerialDeSerial x = new XmlSerialDeSerial();
                 x.SerializeObject(Tasks, "DbTasks");
                 MessageBox.Show("Saved");
@@ -190,13 +210,12 @@ namespace MyScheduler.ViewModel
 
             if (flag == 5 && selectedTask != null)
             {
-                //itemSet.Remove(item);
                 Tasks.Remove(selectedTask);
                 XmlSerialDeSerial x = new XmlSerialDeSerial();
                 x.SerializeObject(Tasks, "DbTasks");
                 MessageBox.Show("Deleted");
             }
-
+            //MessageBox.Show("button");
         }
         #endregion
     }

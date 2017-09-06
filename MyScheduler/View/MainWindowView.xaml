@@ -48,23 +48,10 @@
         </StackPanel>
 
         <StackPanel Margin="10,0,0,10" VerticalAlignment="Bottom"  Grid.Column="1" Orientation="Horizontal">
-            <RadioButton Grid.Column="1" GroupName="Change" Content="View" IsChecked="True" Command="{Binding ClickViewCommand}"  />
+            <RadioButton Grid.Column="1" GroupName="Change" Content="View/Edit" IsChecked="True" Command="{Binding ClickEditCommand}"  />
             <RadioButton Grid.Column="1" GroupName="Change" Content="Search" Command="{Binding ClickSearchCommand}"  />
-            <RadioButton Grid.Column="1" GroupName="Change" Content="Edit" Command="{Binding ClickEditCommand}"  />
             <RadioButton Grid.Column="1" GroupName="Change" Content="Add" Command="{Binding ClickAddCommand}"  />
             <RadioButton Grid.Column="1" GroupName="Change" Content="Delete" Command="{Binding ClickDeleteCommand}"  />
-
-            <ToggleButton>
-                <ToggleButton.Template>
-                    <ControlTemplate TargetType="ToggleButton">
-                        <Grid>
-                            <RadioButton GroupName="Change" IsChecked="{TemplateBinding IsChecked}"
-                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Background="Transparent"/>
-                        </Grid>
-                    </ControlTemplate>
-                </ToggleButton.Template>
-            </ToggleButton>
         </StackPanel>
 
         <Button Grid.Column="1" Content="{Binding ButtonContext.Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="308,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ClickButtonCommand}" />

@@ -53,6 +53,18 @@
             <RadioButton Grid.Column="1" GroupName="Change" Content="Edit" Command="{Binding ClickEditCommand}"  />
             <RadioButton Grid.Column="1" GroupName="Change" Content="Add" Command="{Binding ClickAddCommand}"  />
             <RadioButton Grid.Column="1" GroupName="Change" Content="Delete" Command="{Binding ClickDeleteCommand}"  />
+
+            <ToggleButton>
+                <ToggleButton.Template>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <RadioButton GroupName="Change" IsChecked="{TemplateBinding IsChecked}"
+                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Background="Transparent"/>
+                        </Grid>
+                    </ControlTemplate>
+                </ToggleButton.Template>
+            </ToggleButton>
         </StackPanel>
 
         <Button Grid.Column="1" Content="{Binding ButtonContext.Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="308,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ClickButtonCommand}" />

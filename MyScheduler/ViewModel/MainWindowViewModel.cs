@@ -18,8 +18,18 @@ namespace MyScheduler.ViewModel
         private MyTask selectedTask;
         private ButtonContext buttonContext;
         private ButtonVisibility buttonVisibility;
-        private ObservableCollection<MyTask> Temp;
-        public ObservableCollection<MyTask> Tasks { get; set; }
+        private ObservableCollection<MyTask> temp;
+
+        public ObservableCollection<MyTask> tasks;
+        public ObservableCollection<MyTask> Tasks
+        {
+            get { return tasks; }
+            set
+            {
+                tasks = value;
+                OnPropertyChanged("Tasks");
+            }
+        }
         
 
         public MyTask SelectedTask
@@ -89,6 +99,7 @@ namespace MyScheduler.ViewModel
         /// </summary>
         private void ClickViewMethod()
         {
+ 
             flag = 1;
             this.ButtonContext.Message = "View";
             //MessageBox.Show(flag.ToString());
@@ -97,7 +108,6 @@ namespace MyScheduler.ViewModel
         {
             flag = 2;
             this.ButtonContext.Message = "Search";
-            //MessageBox.Show(flag.ToString());
         }
         private void ClickEditMethod()
         {
@@ -125,8 +135,30 @@ namespace MyScheduler.ViewModel
             this.ButtonContext.Message = "Delete";
             //MessageBox.Show(flag.ToString());
         }
+
+
         private void ClickButtonMethod()//fasade
         {
+            if (flag == 2)
+            {
+                MyTask t = new MyTask();
+                t.Title = "1";
+                tasks.Add(t);
+                List<MyTask> l = new List<MyTask>();
+                foreach(MyTask m in tasks)
+                {
+                    l.Add(m);
+                }
+
+                l.Reverse();
+
+                tasks.Clear();
+               for(int i = 0; i < l.Count; i++)
+                {
+                    tasks.Add(l[i]);
+                }
+        
+            }
             //MessageBox.Show("button");
             if(flag==3 && selectedTask != null)
             {                
@@ -137,7 +169,23 @@ namespace MyScheduler.ViewModel
 
             if (flag == 4 )
             {
-                Tasks.Add(new MyTask());
+                MyTask t = new MyTask();
+                t.Title = "New task";
+                tasks.Add(t);
+                List<MyTask> l = new List<MyTask>();
+                foreach (MyTask m in tasks)
+                {
+                    l.Add(m);
+                }
+                l.Reverse();
+                tasks.Clear();
+                for (int i = 0; i < l.Count; i++)
+                {
+                    tasks.Add(l[i]);
+                }
+                XmlSerialDeSerial x = new XmlSerialDeSerial();
+                x.SerializeObject(Tasks, "DbTasks");
+                MessageBox.Show("Added");
             }
 
             if (flag == 5 && selectedTask != null)

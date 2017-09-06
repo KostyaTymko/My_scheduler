@@ -59,10 +59,6 @@ namespace MyScheduler.ViewModel
         public MainViewModel()
         {
             buttonContext = new ButtonContext();
-            //buttonVisibility = new ButtonVisibility();
-            //buttonVisibility.Visibility = false;
-
-            ClickViewCommand = new Command(arg => ClickViewMethod());
             ClickButtonCommand = new Command(arg => ClickButtonMethod());
             ClickSearchCommand = new Command(arg => ClickSearchMethod());
             ClickAddCommand = new Command(arg => ClickAddMethod());
@@ -85,7 +81,6 @@ namespace MyScheduler.ViewModel
         /// Get or set ClickCommand.
         /// </summary>
         public ICommand ClickButtonCommand { get; set; }
-        public ICommand ClickViewCommand { get; set; }
         public ICommand ClickSearchCommand { get; set; }
         public ICommand ClickAddCommand { get; set; }
         public ICommand ClickEditCommand { get; set; }
@@ -96,19 +91,6 @@ namespace MyScheduler.ViewModel
         /// <summary>
         /// Click method.
         /// </summary>
-        private void ClickViewMethod()
-        { 
-            flag = 1;
-            this.ButtonContext.Message = "View";
-            if (temp != null)
-            {
-                tasks.Clear();
-                for (int i = 0; i < temp.Count; i++)
-                {
-                    tasks.Add(temp[i]);
-                }
-            }
-        }
         private void ClickSearchMethod()
         {
             flag = 2;
@@ -118,12 +100,13 @@ namespace MyScheduler.ViewModel
         {
             if (temp != null)
             {
-                tasks.Clear();
+                //tasks.Clear();
                 for (int i = 0; i < temp.Count; i++)
                 {
                     tasks.Add(temp[i]);
                 }
             }
+            temp = null;
             flag = 3;
             this.ButtonContext.Message = "Save";
         }
@@ -131,12 +114,13 @@ namespace MyScheduler.ViewModel
         {
             if (temp != null)
             {
-                tasks.Clear();
+                //tasks.Clear();
                 for (int i = 0; i < temp.Count; i++)
                 {
                     tasks.Add(temp[i]);
                 }
             }
+            temp = null;
             flag = 4;
             this.ButtonContext.Message = "Add";
         }
@@ -144,16 +128,17 @@ namespace MyScheduler.ViewModel
         {
             if (temp != null)
             {
-                tasks.Clear();
+                //tasks.Clear();
                 for (int i = 0; i < temp.Count; i++)
                 {
                     tasks.Add(temp[i]);
                 }
             }
+            temp = null;
             flag = 5;
             this.ButtonContext.Message = "Delete";
-            //MessageBox.Show(flag.ToString());
         }
+        //---------------------------------------------------------------------------------------------------------------------------------------
         private void ClickButtonMethod()//fasade
         {
            
@@ -165,10 +150,14 @@ namespace MyScheduler.ViewModel
                 {
                     foreach (MyTask m in tasks)
                     {
-                        temp.Add(m);
+                        //temp.Add(m);
                         if (/*m.Body.Contains(selectedTask.Body) ||*/ m.Title.Contains(selectedTask.Title)==true /*|| m.Priority == selectedTask.Priority || m.Date == selectedTask.Date*/)
                         {
                             l.Add(m);
+                        }
+                        else
+                        {
+                            temp.Add(m);
                         }
                     }
                     tasks.Clear();
@@ -177,7 +166,6 @@ namespace MyScheduler.ViewModel
                         tasks.Add(l[i]);
                     }
                 }
-                //MessageBox.Show("!!!!");
             }
 
             if (flag==3 && selectedTask != null)
@@ -203,6 +191,13 @@ namespace MyScheduler.ViewModel
                 {
                     tasks.Add(l[i]);
                 }
+
+                //temp = new List<MyTask>();
+                //foreach (MyTask m in tasks)
+                //{
+                //    temp.Add(m);
+                //}
+
                 XmlSerialDeSerial x = new XmlSerialDeSerial();
                 x.SerializeObject(Tasks, "DbTasks");
                 MessageBox.Show("Added");
@@ -211,11 +206,18 @@ namespace MyScheduler.ViewModel
             if (flag == 5 && selectedTask != null)
             {
                 Tasks.Remove(selectedTask);
+
+                //temp = new List<MyTask>();
+                //foreach (MyTask m in tasks)
+                //{
+                //    temp.Add(m);
+                //}
+
                 XmlSerialDeSerial x = new XmlSerialDeSerial();
                 x.SerializeObject(Tasks, "DbTasks");
                 MessageBox.Show("Deleted");
             }
-            //MessageBox.Show("button");
+
         }
         #endregion
     }

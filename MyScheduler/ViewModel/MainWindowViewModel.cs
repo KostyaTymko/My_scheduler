@@ -62,6 +62,10 @@ namespace MyScheduler.ViewModel
             buttonContext = new ButtonContext();
             ClickButtonCommand = new Command(arg => ClickButtonMethod());
             ClickSearchCommand = new Command(arg => ClickSearchMethod());
+            ClickTitleCommand = new Command(arg => ClickTitleMethod());
+            ClickContentCommand = new Command(arg => ClickContentMethod());
+            ClickPriorityCommand = new Command(arg => ClickPriorityMethod());
+            ClickDateCommand = new Command(arg => ClickDateMethod());
             ClickAddCommand = new Command(arg => ClickAddMethod());
             ClickEditCommand = new Command(arg => ClickEditMethod());
             ClickDeleteCommand = new Command(arg => ClickDeleteMethod());
@@ -82,16 +86,38 @@ namespace MyScheduler.ViewModel
         /// Get or set ClickCommand.
         /// </summary>
         public ICommand ClickButtonCommand { get; set; }
-        public ICommand ClickSearchCommand { get; set; }
+              
         public ICommand ClickAddCommand { get; set; }
         public ICommand ClickEditCommand { get; set; }
         public ICommand ClickDeleteCommand { get; set; }
+
+        public ICommand ClickSearchCommand { get; set; }
+        public ICommand ClickTitleCommand { get; set; }
+        public ICommand ClickContentCommand { get; set; }
+        public ICommand ClickPriorityCommand { get; set; }
+        public ICommand ClickDateCommand { get; set; }
         #endregion
 
         #region Methods
         /// <summary>
         /// Click method.
         /// </summary>
+        private void ClickTitleMethod()
+        {
+            MessageBox.Show("title");
+        }
+        private void ClickContentMethod()
+        {
+            MessageBox.Show("content");
+        }
+        private void ClickPriorityMethod()
+        {
+            MessageBox.Show("priority");
+        }
+        private void ClickDateMethod()
+        {
+            MessageBox.Show("date");
+        }
         private void ClickSearchMethod()
         {
             flag = 2;

@@ -49,10 +49,10 @@
         <StackPanel Margin="0,0,0,40" VerticalAlignment="Bottom"  Grid.Column="1" Orientation="Horizontal"  >
 
             <RadioButton Grid.Column="1" GroupName="Change" Content="Search by:" Command="{Binding ClickSearchCommand}" Margin="10,2,0,0"  />
-            <RadioButton Grid.Column="1" GroupName="Search" Content="Title" IsChecked="True" Command="{Binding d}" Margin="10,2,0,0"   />
-            <RadioButton Grid.Column="1" GroupName="Search" Content="Content" Command="{Binding d}" Margin="0,2,0,0"   />
-            <RadioButton Grid.Column="1" GroupName="Search" Content="Priority"  Command="{Binding d}" Margin="0,2,0,0"   />
-            <RadioButton Grid.Column="1" GroupName="Search" Content="Date"  Command="{Binding d}" Margin="0,2,0,0"   />
+            <RadioButton Grid.Column="1" GroupName="Search" Content="Title" IsChecked="True" Command="{Binding ClickTitleCommand}" Margin="10,2,0,0"   />
+            <RadioButton Grid.Column="1" GroupName="Search" Content="Content" Command="{Binding ClickContentCommand}" Margin="0,2,0,0"   />
+            <RadioButton Grid.Column="1" GroupName="Search" Content="Priority"  Command="{Binding ClickPriorityCommand}" Margin="0,2,0,0"   />
+            <RadioButton Grid.Column="1" GroupName="Search" Content="Date"  Command="{Binding ClickDateCommand}" Margin="0,2,0,0"   />
             <TextBox Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="10,0,0,0" Width="177" />
         </StackPanel>
 

@@ -141,29 +141,32 @@ namespace MyScheduler.ViewModel
         //---------------------------------------------------------------------------------------------------------------------------------------
         private void ClickButtonMethod()//fasade
         {
-           
+
             if (flag == 2)
             {
-                temp = new List<MyTask>();
-                List<MyTask> l = new List<MyTask>();
-                if (selectedTask != null)
+                if (temp == null)
                 {
-                    foreach (MyTask m in tasks)
+                    temp = new List<MyTask>();
+                    List<MyTask> l = new List<MyTask>();
+                    if (selectedTask != null)
                     {
-                        //temp.Add(m);
-                        if (/*m.Body.Contains(selectedTask.Body) ||*/ m.Title.Contains(selectedTask.Title)==true /*|| m.Priority == selectedTask.Priority || m.Date == selectedTask.Date*/)
+                        foreach (MyTask m in tasks)
                         {
-                            l.Add(m);
+                            //temp.Add(m);
+                            if (/*m.Body.Contains(selectedTask.Body) ||*/ m.Title.Contains(selectedTask.Title) == true /*|| m.Priority == selectedTask.Priority || m.Date == selectedTask.Date*/)
+                            {
+                                l.Add(m);
+                            }
+                            else
+                            {
+                                temp.Add(m);
+                            }
                         }
-                        else
+                        tasks.Clear();
+                        for (int i = 0; i < l.Count; i++)
                         {
-                            temp.Add(m);
+                            tasks.Add(l[i]);
                         }
-                    }
-                    tasks.Clear();
-                    for (int i = 0; i < l.Count; i++)
-                    {
-                        tasks.Add(l[i]);
                     }
                 }
             }

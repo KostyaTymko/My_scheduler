@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyScheduler"
         mc:Ignorable="d"
-        Title=" My scheduler" Height="350" Width="735">
+        Title=" My scheduler" Height="350" Width="840">
 
     <Window.Resources>
         <Style TargetType="TextBlock">
@@ -18,7 +18,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="1.2*" />
+            <ColumnDefinition Width="1.5*" />
         </Grid.ColumnDefinitions>
 
         <ListBox Grid.Column="0" ItemsSource="{Binding Tasks}"
@@ -36,24 +36,32 @@
         </ListBox>
 
         <StackPanel Grid.Column="1" DataContext="{Binding SelectedTask}">
-            <TextBlock Text="Выбранная задача"  />
-            <TextBlock Text="Название" />
+            <TextBlock Text="Selected task"  />
+            <TextBlock Text="Title" />
             <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Описание" />
+            <TextBlock Text="Task content" />
             <TextBox TextWrapping="Wrap" Text="{Binding Body, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Приоритет" />
+            <TextBlock Text="Priority" />
             <TextBox Text="{Binding Priority, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Дата" />
+            <TextBlock Text="Date" />
             <TextBox Text="{Binding Date, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Margin="0,0,0,40" VerticalAlignment="Bottom"  Grid.Column="1" Orientation="Horizontal"  >
+
+            <RadioButton Grid.Column="1" GroupName="Change" Content="Search by:" Command="{Binding ClickSearchCommand}" Margin="10,2,0,0"  />
+            <RadioButton Grid.Column="1" GroupName="Search" Content="Title" IsChecked="True" Command="{Binding d}" Margin="10,2,0,0"   />
+            <RadioButton Grid.Column="1" GroupName="Search" Content="Content" Command="{Binding d}" Margin="0,2,0,0"   />
+            <RadioButton Grid.Column="1" GroupName="Search" Content="Priority"  Command="{Binding d}" Margin="0,2,0,0"   />
+            <RadioButton Grid.Column="1" GroupName="Search" Content="Date"  Command="{Binding d}" Margin="0,2,0,0"   />
+            <TextBox Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="10,0,0,0" Width="177" />
         </StackPanel>
 
         <StackPanel Margin="10,0,0,10" VerticalAlignment="Bottom"  Grid.Column="1" Orientation="Horizontal">
-            <RadioButton Grid.Column="1" GroupName="Change" Content="View/Edit" IsChecked="True" Command="{Binding ClickEditCommand}"  />
-            <RadioButton Grid.Column="1" GroupName="Change" Content="Search" Command="{Binding ClickSearchCommand}"  />
-            <RadioButton Grid.Column="1" GroupName="Change" Content="Add" Command="{Binding ClickAddCommand}"  />
-            <RadioButton Grid.Column="1" GroupName="Change" Content="Delete" Command="{Binding ClickDeleteCommand}"  />
+            <RadioButton Grid.Column="1" GroupName="Change" Content="Update/Edit/Save" IsChecked="True" Command="{Binding ClickEditCommand}" Margin="0,2,5,0" />
+            <RadioButton Grid.Column="1" GroupName="Change" Content="Add" Command="{Binding ClickAddCommand}" Margin="0,2,5,0" />
+            <RadioButton Grid.Column="1" GroupName="Change" Content="Delete" Command="{Binding ClickDeleteCommand}"  Margin="0,2,5,0" />
         </StackPanel>
 
-        <Button Grid.Column="1" Content="{Binding ButtonContext.Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="308,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ClickButtonCommand}" />
+        <Button Grid.Column="1" Content="{Binding ButtonContext.Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="408,0,0,10" VerticalAlignment="Bottom" Width="75" Command="{Binding ClickButtonCommand}" />
     </Grid>
 </Window>

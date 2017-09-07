@@ -16,9 +16,9 @@ namespace MyScheduler.ViewModel
     {
         Shedules_Singleton s;
         private int flag;
+        private string searchString;
         private MyTask selectedTask;
         private ButtonContext buttonContext;
-        private ButtonVisibility buttonVisibility;
         private List<MyTask> temp;
 
         public ObservableCollection<MyTask> tasks;
@@ -41,21 +41,22 @@ namespace MyScheduler.ViewModel
             }
         }
 
+        public string SearchString
+        {
+            get { return searchString; }
+            set
+            {
+                searchString = value;
+                OnPropertyChanged("SearchString");
+            }
+        }
+
         public ButtonContext ButtonContext
         {
             get { return buttonContext; }
             set { buttonContext = value; }
         }
 
-        public ButtonVisibility ButtonVisbility
-        {
-            get { return buttonVisibility; }
-            set
-            {
-                buttonVisibility = value;
-                OnPropertyChanged("Visibility");
-            }
-        }
         public MainViewModel()
         {
             buttonContext = new ButtonContext();
@@ -94,7 +95,7 @@ namespace MyScheduler.ViewModel
         private void ClickSearchMethod()
         {
             flag = 2;
-            this.ButtonContext.Message = "Search";
+            this.ButtonContext.Message = "Search";            
         }
         private void ClickEditMethod()
         {
@@ -146,14 +147,16 @@ namespace MyScheduler.ViewModel
             {
                 if (temp == null)
                 {
+
                     temp = new List<MyTask>();
                     List<MyTask> l = new List<MyTask>();
-                    if (selectedTask != null)
+                    if (searchString != null)
                     {
+                        //MessageBox.Show(searchString);
                         foreach (MyTask m in tasks)
                         {
                             //temp.Add(m);
-                            if (/*m.Body.Contains(selectedTask.Body) ||*/ m.Title.Contains(selectedTask.Title) == true /*|| m.Priority == selectedTask.Priority || m.Date == selectedTask.Date*/)
+                            if (/*m.Body.Contains(selectedTask.Body) ||*/ m.Title.Contains(searchString) == true /*|| m.Priority == selectedTask.Priority || m.Date == selectedTask.Date*/)
                             {
                                 l.Add(m);
                             }
@@ -167,6 +170,8 @@ namespace MyScheduler.ViewModel
                         {
                             tasks.Add(l[i]);
                         }
+                        SearchString = "1111111111111111111";
+                        //Tasks.Clear();
                     }
                 }
             }
@@ -194,13 +199,6 @@ namespace MyScheduler.ViewModel
                 {
                     tasks.Add(l[i]);
                 }
-
-                //temp = new List<MyTask>();
-                //foreach (MyTask m in tasks)
-                //{
-                //    temp.Add(m);
-                //}
-
                 XmlSerialDeSerial x = new XmlSerialDeSerial();
                 x.SerializeObject(Tasks, "DbTasks");
                 MessageBox.Show("Added");
@@ -209,13 +207,6 @@ namespace MyScheduler.ViewModel
             if (flag == 5 && selectedTask != null)
             {
                 Tasks.Remove(selectedTask);
-
-                //temp = new List<MyTask>();
-                //foreach (MyTask m in tasks)
-                //{
-                //    temp.Add(m);
-                //}
-
                 XmlSerialDeSerial x = new XmlSerialDeSerial();
                 x.SerializeObject(Tasks, "DbTasks");
                 MessageBox.Show("Deleted");

@@ -64,7 +64,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\ButtonContext.cs" />
-    <Compile Include="Model\ButtonVisibility.cs" />
     <Compile Include="Model\Shedules_Singleton.cs" />
     <Compile Include="Model\MyTask.cs" />
     <Compile Include="Model\XmlSerialDeSerial.cs" />

@@ -64,6 +64,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\ButtonContext.cs" />
+    <Compile Include="Model\FlagHandler\ConcreteFlagHandler3.cs" />
+    <Compile Include="Model\FlagHandler\ConcreteFlagHandler4.cs" />
+    <Compile Include="Model\FlagHandler\ConcreteFlagHandler5.cs" />
+    <Compile Include="Model\FlagHandler\FlagHandler.cs" />
     <Compile Include="Model\Shedules_Singleton.cs" />
     <Compile Include="Model\MyTask.cs" />
     <Compile Include="Model\XmlSerialDeSerial.cs" />

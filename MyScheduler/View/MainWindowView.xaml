@@ -47,16 +47,16 @@
             <TextBox Text="{Binding Date, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Margin="0,0,0,40" VerticalAlignment="Bottom"  Grid.Column="1" Orientation="Horizontal"  >
-
-            <RadioButton Grid.Column="1" GroupName="Change" Content="Search by:" Command="{Binding ClickSearchCommand}" Margin="10,2,0,0"  />
+            <TextBlock Text="Search by:" Margin="22,0,0,0" ></TextBlock>
             <RadioButton Grid.Column="1" GroupName="Search" Content="Title" IsChecked="True" Command="{Binding ClickTitleCommand}" Margin="10,2,0,0"   />
             <RadioButton Grid.Column="1" GroupName="Search" Content="Content" Command="{Binding ClickContentCommand}" Margin="0,2,0,0"   />
             <RadioButton Grid.Column="1" GroupName="Search" Content="Priority"  Command="{Binding ClickPriorityCommand}" Margin="0,2,0,0"   />
             <RadioButton Grid.Column="1" GroupName="Search" Content="Date"  Command="{Binding ClickDateCommand}" Margin="0,2,0,0"   />
-            <TextBox Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="10,0,0,0" Width="177" />
+            <TextBox Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="10,0,0,0" Width="179" />
         </StackPanel>
 
         <StackPanel Margin="10,0,0,10" VerticalAlignment="Bottom"  Grid.Column="1" Orientation="Horizontal">
+            <RadioButton Grid.Column="1" GroupName="Change" Content="Search" Command="{Binding ClickSearchCommand}" Margin="10,2,5,0"  />
             <RadioButton Grid.Column="1" GroupName="Change" Content="Update/Edit/Save" IsChecked="True" Command="{Binding ClickEditCommand}" Margin="0,2,5,0" />
             <RadioButton Grid.Column="1" GroupName="Change" Content="Add" Command="{Binding ClickAddCommand}" Margin="0,2,5,0" />
             <RadioButton Grid.Column="1" GroupName="Change" Content="Delete" Command="{Binding ClickDeleteCommand}"  Margin="0,2,5,0" />

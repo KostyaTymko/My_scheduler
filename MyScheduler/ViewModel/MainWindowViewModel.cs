@@ -16,10 +16,11 @@ namespace MyScheduler.ViewModel
     {
         Shedules_Singleton s;
         private int flag;
+        private int searchFlag;
         private string searchString;
         private MyTask selectedTask;
         private ButtonContext buttonContext;
-        private List<MyTask> temp;
+        public List<MyTask> temp;
 
         public ObservableCollection<MyTask> tasks;
         public ObservableCollection<MyTask> Tasks
@@ -71,8 +72,9 @@ namespace MyScheduler.ViewModel
             ClickDeleteCommand = new Command(arg => ClickDeleteMethod());
             s = Shedules_Singleton.getInstance("DbTasks");
             Tasks = s.Tasks;
-            ClickEditMethod();            
-        }
+            ClickEditMethod();
+            ClickTitleMethod();
+    }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
@@ -104,19 +106,23 @@ namespace MyScheduler.ViewModel
         /// </summary>
         private void ClickTitleMethod()
         {
-            MessageBox.Show("title");
+            searchFlag = 1;
+            //MessageBox.Show("title");
         }
         private void ClickContentMethod()
         {
-            MessageBox.Show("content");
+            searchFlag = 2;
+            //MessageBox.Show("content");
         }
         private void ClickPriorityMethod()
         {
-            MessageBox.Show("priority");
+            searchFlag = 3;
+            //MessageBox.Show("priority");
         }
         private void ClickDateMethod()
         {
-            MessageBox.Show("date");
+            searchFlag = 4;
+            //MessageBox.Show("date");
         }
         private void ClickSearchMethod()
         {
@@ -169,6 +175,15 @@ namespace MyScheduler.ViewModel
         private void ClickButtonMethod()//fasade
         {
 
+            FlagHandler h3 = new ConcreteFlagHandler3();
+            FlagHandler h4 = new ConcreteFlagHandler4();
+            FlagHandler h5 = new ConcreteFlagHandler5();
+
+            h3.Successor = h4;
+            h4.Successor = h5;
+            h3.HandleRequest(flag,Tasks,selectedTask);
+            //h1.HandleRequest(flag);
+
             if (flag == 2)
             {
                 if (temp == null)
@@ -181,15 +196,41 @@ namespace MyScheduler.ViewModel
                         //MessageBox.Show(searchString);
                         foreach (MyTask m in tasks)
                         {
-                            //temp.Add(m);
-                            if (/*m.Body.Contains(selectedTask.Body) ||*/ m.Title.Contains(searchString) == true /*|| m.Priority == selectedTask.Priority || m.Date == selectedTask.Date*/)
+                            
+                            if (searchFlag == 1)
                             {
-                                l.Add(m);
+                                if (/*m.Body.Contains(selectedTask.Body) ||*/ m.Title.Contains(searchString) == true /*|| m.Priority == selectedTask.Priority || m.Date == selectedTask.Date*/)
+                                {
+                                    l.Add(m);
+                                }
+                                else
+                                {
+                                    temp.Add(m);
+                                }
                             }
-                            else
+                            if (searchFlag == 2)
                             {
-                                temp.Add(m);
+                                if (m.Body.Contains(searchString) )
+                                {
+                                    l.Add(m);
+                                }
+                                else
+                                {
+                                    temp.Add(m);
+                                }
                             }
+                            if (searchFlag == 3)
+                            {
+                                if (m.Priority== Int32.Parse(searchString))
+                                {
+                                    l.Add(m);
+                                }
+                                else
+                                {
+                                    temp.Add(m);
+                                }
+                            }
+
                         }
                         tasks.Clear();
                         for (int i = 0; i < l.Count; i++)
@@ -202,43 +243,113 @@ namespace MyScheduler.ViewModel
                 }
             }
 
-            if (flag==3 && selectedTask != null)
+            //if (flag==3 && selectedTask != null)
+            //{
+            //    XmlSerialDeSerial x = new XmlSerialDeSerial();
+            //    x.SerializeObject(Tasks, "DbTasks");
+            //    MessageBox.Show("Saved");
+            //}
+
+            //if (flag == 4 )
+            //{
+            //    MyTask t = new MyTask();
+            //    t.Title = "New task";
+            //    tasks.Add(t);
+            //    List<MyTask> l = new List<MyTask>();
+            //    foreach (MyTask m in tasks)
+            //    {
+            //        l.Add(m);
+            //    }
+            //    l.Reverse();
+            //    tasks.Clear();
+            //    for (int i = 0; i < l.Count; i++)
+            //    {
+            //        tasks.Add(l[i]);
+            //    }
+            //    XmlSerialDeSerial x = new XmlSerialDeSerial();
+            //    x.SerializeObject(Tasks, "DbTasks");
+            //    MessageBox.Show("Added");
+            //}
+
+            //if (flag == 5 && selectedTask != null)
+            //{
+            //    Tasks.Remove(selectedTask);
+            //    XmlSerialDeSerial x = new XmlSerialDeSerial();
+            //    x.SerializeObject(Tasks, "DbTasks");
+            //    MessageBox.Show("Deleted");
+            //}
+
+        }
+        #endregion
+    }
+
+    abstract class FlagHandler
+    {
+        public FlagHandler Successor { get; set; }
+        public abstract void HandleRequest(int flag, ObservableCollection<MyTask> Tasks, MyTask selectedTask);
+    }
+
+    class ConcreteFlagHandler3 : FlagHandler
+    {
+        public override void HandleRequest(int flag, ObservableCollection<MyTask> Tasks, MyTask selectedTask)
+        {
+            if (flag == 3 && selectedTask != null)
             {
                 XmlSerialDeSerial x = new XmlSerialDeSerial();
                 x.SerializeObject(Tasks, "DbTasks");
                 MessageBox.Show("Saved");
+                return;
             }
+            else if (Successor != null)
+                Successor.HandleRequest(flag, Tasks, selectedTask);
+        }
+    }
 
-            if (flag == 4 )
+    class ConcreteFlagHandler4 : FlagHandler
+    {
+        public override void HandleRequest(int flag, ObservableCollection<MyTask> Tasks, MyTask selectedTask)
+        {
+            if (flag == 4)
             {
                 MyTask t = new MyTask();
                 t.Title = "New task";
-                tasks.Add(t);
+                Tasks.Add(t);
                 List<MyTask> l = new List<MyTask>();
-                foreach (MyTask m in tasks)
+                foreach (MyTask m in Tasks)
                 {
                     l.Add(m);
                 }
                 l.Reverse();
-                tasks.Clear();
+                Tasks.Clear();
                 for (int i = 0; i < l.Count; i++)
                 {
-                    tasks.Add(l[i]);
+                    Tasks.Add(l[i]);
                 }
                 XmlSerialDeSerial x = new XmlSerialDeSerial();
                 x.SerializeObject(Tasks, "DbTasks");
                 MessageBox.Show("Added");
+                return;
             }
+            else if (Successor != null)
+                Successor.HandleRequest(flag, Tasks, selectedTask);
+        }
+    }
 
+    class ConcreteFlagHandler5 : FlagHandler
+    {
+        public override void HandleRequest(int flag, ObservableCollection<MyTask> Tasks, MyTask selectedTask)
+        {
             if (flag == 5 && selectedTask != null)
             {
                 Tasks.Remove(selectedTask);
                 XmlSerialDeSerial x = new XmlSerialDeSerial();
                 x.SerializeObject(Tasks, "DbTasks");
                 MessageBox.Show("Deleted");
+                return;
             }
-
+            else if (Successor != null)
+                Successor.HandleRequest(flag, Tasks, selectedTask);
         }
-        #endregion
     }
+
 }
